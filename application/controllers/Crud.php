@@ -10,6 +10,7 @@ class Crud extends CI_Controller
     }
     public function insert_data()
     {
+        $this->load->model('Crud_m');
         // print_r($this->input->post());
         $data = [
             'email' => $this->input->post('email'),
@@ -19,6 +20,27 @@ class Crud extends CI_Controller
             'no_telepon' => $this->input->post('no_tlp'),
             'password' => $this->input->post('password')
         ];
-        $this->db->insert('siswa', $data);
+        $this->Crud_m->insert_data($data);
+        // $this->db->insert('siswa', $data);
+        $model_crud = $this->Crud_m;
+        if ($model_crud > 0) {
+            echo "Data Berhasil Di Simpan";
+        } else {
+            echo "Data Gagal Di Simpan";
+        }
+    }
+    public function ambil_data()
+    {
+        $this->load->model('Crud_m');
+        $data = [
+            'data' => $this->Crud_m->ambil_data()
+        ];
+        // print_r($data);
+        // die;
+        $this->load->view('home', $data);
+    }
+    public function api()
+    {
+        $this->load->view('v_api');
     }
 }

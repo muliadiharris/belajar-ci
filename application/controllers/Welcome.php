@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -26,6 +27,44 @@ class Welcome extends CI_Controller {
 	public function home()
 	{
 		$this->load->view('home');
-		
+	}
+	public function login()
+	{
+
+		$this->session->set_userdata([
+			'login' => true,
+			'level' => 'admin'
+		]);
+	}
+	public function test_session()
+	{
+		if ($this->session->userdata('login') != true) {
+
+			echo "login dulu woi";
+		} else {
+
+			echo $this->session->userdata('login');
+		}
+		$this->session->set_userdata(['login' => true]);
+	}
+	public function logout()
+	{
+		$this->session->sess_destroy();
+	}
+	public function admin()
+	{
+		if ($this->session->userdata('login') != true) {
+
+			echo "login dulu woi";
+		} else {
+			if ($this->session->userdata('level') === 'admin') {
+
+				echo $this->session->userdata('login');
+				echo $this->session->userdata('level');
+			} else {
+				echo "saya bukan admin";
+			}
+		}
+		$this->session->set_userdata(['login' => true]);
 	}
 }
